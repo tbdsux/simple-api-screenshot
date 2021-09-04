@@ -8,7 +8,7 @@ module.exports = async (req, res) => {
             browser = await playwright.launchChromium({ headless: true })
             const context = await browser.newContext()
             const page = await context.newPage()
-            await page.goto(query.url)
+            await page.goto(query.url, {waitUntil: "networkidle"})
             const screenshot = await page.screenshot({ type: "png" })
             res.setHeader("Content-Type", "image/png")
             res.status(200).send(screenshot)
